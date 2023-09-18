@@ -13,6 +13,7 @@ app.use(bodyParser.json({limit:"30mb", extended:true}))
 app.use(bodyParser.urlencoded({limit:"30mb",extended: true }));
 app.use(cors());
 //this means that every route in posts will be reached from localhost:3002/posts
+//and this should always be below app.use(cors());
 app.use('/posts', postRoutes)
 
 const PORT = process.env.port || 3002;
