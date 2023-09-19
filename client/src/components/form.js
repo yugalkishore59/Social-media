@@ -1,10 +1,17 @@
-import React from "react";
+import { React, useEffect } from "react";
 import { useState } from "react";
 import FileBase from "react-file-base64";
 import "../styles/form.scss";
 import usePostStore from "../store/post";
 
 const Form = () => {
+  const isEdit = usePostStore((state) => state.isEdit);
+  const editId = usePostStore((state) => state.editId);
+  const updatePost = usePostStore((state) => state.updatePost);
+  const toggleIsEdit = usePostStore((state) => state.toggleIsEdit);
+  const createPost = usePostStore((state) => state.createPost);
+  const posts = usePostStore((state) => state.posts);
+
   const [postData, setPostData] = useState({
     author: "",
     title: "",
@@ -14,17 +21,27 @@ const Form = () => {
     createdAt: new Date(),
   });
 
-  const createPost = usePostStore((state) => state.createPost);
+  useEffect(() => {
+    if (isEdit) {
+      const data = posts.find((p) => p._id === editId);
+      setPostData(data); // Removed { data }
+      console.log("editing", data);
+    }
+  }, [isEdit, editId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setPostData((prevData) => ({
-      ...prevData,
-      createdAt: new Date(),
-    }));
-
-    createPost(postData);
+    if (isEdit) {
+      updatePost(editId, postData);
+      toggleIsEdit(false);
+    } else {
+      setPostData((prevData) => ({
+        ...prevData,
+        createdAt: new Date(),
+      }));
+      createPost(postData);
+    }
 
     setPostData({
       author: "",
@@ -47,7 +64,10 @@ const Form = () => {
   };
   return (
     <div className="form_container">
-      <div className="form_heading">Create new post</div>
+      <div className="form_heading">
+        {isEdit ? "Edit post" : "Create new post"}
+      </div>
+
       <form className="form" onSubmit={handleSubmit}>
         <div className="input-group flex-nowrap">
           <span className="input-group-text" id="addon-wrapping">

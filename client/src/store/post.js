@@ -3,6 +3,11 @@ import * as api from "../api";
 
 const usePostStore = create((set) => ({
   posts: [],
+  isEdit: false,
+  editId: "",
+  toggleIsEdit: (_isEdit, _editId = "") => {
+    set({ isEdit: _isEdit, editId: _editId });
+  },
   getPosts: async () => {
     try {
       const _posts = await api.getPosts();
@@ -25,7 +30,7 @@ const usePostStore = create((set) => ({
       const updatedPost = await api.updatePost(id, post);
       set((state) => ({
         posts: state.posts.map((_post) =>
-          updatedPost._id === _post._id ? updatedPost : _post
+          id === _post._id ? updatedPost.data : _post
         ),
       }));
     } catch (error) {
