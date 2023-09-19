@@ -4,22 +4,29 @@ import { FcLike, FcLikePlaceholder, FcComments } from "react-icons/fc";
 import { AiFillEdit } from "react-icons/ai";
 import "../../styles/post.scss";
 import moment from "moment";
+import usePostStore from "../../store/post";
 
-import dummyPost from "../../assets/dummy_post.jpg";
+const Post = ({ post }) => {
+  const deletePost = usePostStore((state) => state.deletePost);
+  const editPost = usePostStore((state) => state.updatePost);
 
-const Post = ({ key, post }) => {
+  function handleDelete() {
+    deletePost(post._id);
+  }
+  function handleEdit() {}
+
   return (
     <div className="post_container">
       <div className="post_info">
         <div className="post_user_details">
           <img src={image.userLogo} alt="user_logo" />
           <span className="post_user">
-            @username<span>7 days ago</span>
+            {post?.author}
+            <span>{moment(post?.createdAt).fromNow()}</span>
           </span>
         </div>
         <a
           className="nav-link dropdown-toggle"
-          href="#"
           role="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -28,35 +35,40 @@ const Post = ({ key, post }) => {
         </a>
         <ul className="dropdown-menu">
           <li>
-            <a className="dropdown-item" href="#">
+            <div className="dropdown-item" onClick={handleEdit}>
               Edit
-            </a>
+            </div>
           </li>
           <li>
-            <a className="dropdown-item" href="#" style={{ color: "red" }}>
+            <div
+              className="dropdown-item"
+              onClick={handleDelete}
+              style={{ color: "red" }}
+            >
               Delete
-            </a>
+            </div>
           </li>
         </ul>
       </div>
 
       <div className="post_body">
-        <div className="post_title">Very happy birthday!</div>
+        <div className="post_title">{post?.title}</div>
         <div className="post_media">
-          <img src={dummyPost} />
+          <img src={post?.selectedFile} />
         </div>
-        <div className="post_message">
-          A wish for you on your birthday, whatever you ask may you receive,
-          whatever you seek may you find, whatever you wish may it be fulfilled
-          on your birthday and always. Happy birthday!
-        </div>
+        <div className="post_message">{post?.message}</div>
       </div>
+      {post?.tags != "" && (
+        <div className="hash_tags">{post?.tags.map((tag) => `#${tag}`)}</div>
+      )}
+
+      <hr />
       <div className="post_reaction_container">
         <div className="post_reaction">
-          <FcLikePlaceholder size={40} />
-          <FcComments size={40} />
+          <FcLikePlaceholder size={30} />
+          <FcComments size={30} />
+          <span>{post?.likeCount} likes · 10 comments</span>
         </div>
-        <span>50 likes · 10 comments</span>
       </div>
     </div>
   );
