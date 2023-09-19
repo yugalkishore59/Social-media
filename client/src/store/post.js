@@ -5,8 +5,8 @@ const usePostStore = create((set) => ({
   posts: [],
   getPosts: async () => {
     try {
-      const _posts = await api.fetchPosts();
-      set({ posts: [_posts] });
+      const _posts = await api.getPosts();
+      set({ posts: _posts.data });
     } catch (error) {
       console.log(error);
     }
@@ -14,8 +14,8 @@ const usePostStore = create((set) => ({
   createPost: async (post) => {
     try {
       const createdPost = await api.createPost(post);
-      set((state) => ({ posts: [...state.posts, createdPost] }));
-      alert("new posts");
+      const temp = createdPost.data.newPost;
+      set((state) => ({ posts: [...state.posts, temp] }));
     } catch (error) {
       console.log(error);
     }
@@ -36,9 +36,7 @@ const usePostStore = create((set) => ({
     try {
       await api.deletePost(id);
       set((state) => ({
-        posts: state.posts.map((_post) => {
-          if (_post._id !== id) return _post;
-        }),
+        posts: state.posts.filter((post) => post._id !== id),
       }));
     } catch (error) {
       console.log(error);

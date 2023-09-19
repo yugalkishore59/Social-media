@@ -49,11 +49,16 @@
         }
     }
 
-    .post_reaction_container{
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    .hash_tags{
         margin-top: 10px;
-        border-radius: 10px;
-        padding: 10px;
+        color: green;
+    }
+
+    .post_reaction_container{
+        // box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        // margin-top: 10px;
+        // border-radius: 10px;
+        // padding: 10px;
 
         .post_reaction{
             >*{
@@ -63,4 +68,8 @@
     }
 
     
+}
+
+.dropdown-item{
+    cursor: pointer;
 }
