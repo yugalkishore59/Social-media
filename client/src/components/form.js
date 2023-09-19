@@ -50,7 +50,7 @@ const Form = () => {
         </div>
 
         <div className="input-group flex-nowrap">
-          <input type="text" className="form-control" placeholder="Title" aria-describedby="addon-wrapping" value={postData.title} onChange={(e) => setPostData({...postData, title: e.target.value})} required/>
+          <input type="text" className="form-control" placeholder="Caption" aria-describedby="addon-wrapping" value={postData.title} onChange={(e) => setPostData({...postData, title: e.target.value})} required/>
         </div>
 
         <div className="input-group">
