@@ -20,4 +20,4 @@ const PORT = process.env.port || 3002;
 
 mongoose.connect(process.env.MONGODB_URL,{useUnifiedTopology: true})
 .then(()=> app.listen(PORT,()=>console.log(`running on port ${PORT}`)))
-.catch((e)=> console.log("Oh shit!" + e));
+.catch((e)=> console.log("Oh shit! " + e));
