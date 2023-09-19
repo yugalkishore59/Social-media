@@ -13,11 +13,13 @@ const Posts = () => {
       {!posts && <div class="spinner" />}
       {posts && (
         <div className="posts_container">
-          {posts.reverse().map((_post, index) => (
-            <div key={index}>
-              <Post post={_post} />
-            </div>
-          ))}
+          {posts
+            .map((_post, index) => (
+              <div key={index}>
+                <Post post={_post} />
+              </div>
+            ))
+            .reverse()}
         </div>
       )}
     </>

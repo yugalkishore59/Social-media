@@ -8,12 +8,14 @@ import usePostStore from "../../store/post";
 
 const Post = ({ post }) => {
   const deletePost = usePostStore((state) => state.deletePost);
-  const editPost = usePostStore((state) => state.updatePost);
+  const editPost = usePostStore((state) => state.toggleIsEdit);
 
   function handleDelete() {
     deletePost(post._id);
   }
-  function handleEdit() {}
+  function handleEdit() {
+    editPost(true, post._id);
+  }
 
   return (
     <div className="post_container">
@@ -59,7 +61,9 @@ const Post = ({ post }) => {
         <div className="post_message">{post?.message}</div>
       </div>
       {post?.tags != "" && (
-        <div className="hash_tags">{post?.tags.map((tag) => `#${tag}`)}</div>
+        <div className="hash_tags">
+          {post?.tags.toString().replace(/\b(\w+)/g, "#$1")}
+        </div>
       )}
 
       <hr />
