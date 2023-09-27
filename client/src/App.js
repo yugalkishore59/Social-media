@@ -1,25 +1,24 @@
 import "./App.scss";
-import usePostStore from "./store/post";
-import { useEffect } from "react";
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./components/home";
 import Navbar from "./components/navbar";
-import Posts from "./components/Posts/posts";
-import Form from "./components/form";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/hi",
+    element: <div>Hi</div>,
+  },
+]);
 
 function App() {
-  const refreshPosts = usePostStore((state) => state.getPosts)();
-
   return (
     <>
       <Navbar />
-      <div className="app_body">
-        <div className="left_body">Left</div>
-        <div className="main_body">
-          <Form />
-          <Posts />
-        </div>
-        <div className="right_body">Right</div>
-      </div>
+      <RouterProvider router={router} />
     </>
   );
 }
