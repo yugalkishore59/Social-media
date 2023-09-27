@@ -23,9 +23,9 @@ const navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link " aria-current="page" href="/">
+              <Link to={`/`} className="nav-link">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -108,10 +108,9 @@ const navbar = () => {
             ) : (
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  {/* <Link to={`auth`} className="nav-link">
+                  <Link to={`auth`} className="nav-link">
                     Join
-                  </Link> */}
-                  <a href="/auth">Join</a>
+                  </Link>
                 </li>
               </ul>
             )}
