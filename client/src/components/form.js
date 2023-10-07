@@ -103,7 +103,7 @@ const Form = () => {
 
         <div className="input-group">
           <textarea
-            maxlength="400"
+            maxLength="400"
             className="form-control"
             placeholder="What's on your mind?"
             value={postData.message}
