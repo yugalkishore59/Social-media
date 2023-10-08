@@ -5,6 +5,7 @@ import {
   updatePost,
   deletePost,
 } from "../controllers/post.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 

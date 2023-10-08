@@ -1,8 +1,12 @@
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const navbar = () => {
-  let user = null;
+import useAuthStore from "../store/user";
+
+const Navbar = () => {
+  let user = useAuthStore((state) => state.AuthData);
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -71,7 +75,7 @@ const navbar = () => {
             </button>
           </form>
           <div>
-            {user ? (
+            {user.length != 0 ? (
               <ul className="navbar-nav mb-2 mb-lg-0">
                 <li className="nav-item dropdown">
                   <a
@@ -81,7 +85,7 @@ const navbar = () => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    User
+                    {user.username}
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
@@ -121,4 +125,4 @@ const navbar = () => {
   );
 };
 
-export default navbar;
+export default Navbar;
