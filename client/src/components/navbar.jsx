@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import useAuthStore from "../store/user";
 
 const Navbar = () => {
-  let user = useAuthStore((state) => state.AuthData);
+  const navigate = useNavigate();
+  let authData = useAuthStore((state) => state.AuthData);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const signOut = useAuthStore((state) => state.signOut);
+  useEffect(() => {
+    const token = user?.token;
+    setUser(JSON.parse(localStorage.getItem("user")));
+    navigate("/");
+  }, [authData]);
+
+  function handleSignOut() {
+    signOut();
+    navigate("/");
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -75,7 +88,7 @@ const Navbar = () => {
             </button>
           </form>
           <div>
-            {user.length != 0 ? (
+            {user ? (
               <ul className="navbar-nav mb-2 mb-lg-0">
                 <li className="nav-item dropdown">
                   <a
@@ -85,7 +98,7 @@ const Navbar = () => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    {user.username}
+                    {user.result.username}
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
@@ -102,8 +115,8 @@ const Navbar = () => {
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
-                        <span style={{ color: "red" }}>Logout</span>
+                      <a className="dropdown-item" onClick={handleSignOut}>
+                        <span style={{ color: "red" }}>SignOut</span>
                       </a>
                     </li>
                   </ul>
